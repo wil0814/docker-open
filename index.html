@@ -6,17 +6,19 @@
 </head>
  
 <body>
-<form action="test.php" method="get">
-	<select>
-                <option value="ubuntu" selected>ubuntu</option>
-                <option value="centos">centos</option>
+<form action="select.php" method="POST">
+	<select name ="iso">
+                <option  value="ubuntu" selected>ubuntu</option>
+                <option  value="centos">centos</option>
         </select>
 
-	<select> 
+	<select name ="server"> 
 		<option value="nginx" selected>nginx</option>
 		<option value="apach">apach</option>
 	</select>
 	
+
+
 	<input type="submit" value="送出資料">
 
 </form>

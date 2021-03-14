@@ -1,3 +1,16 @@
 <?php
-echo"123";
+
+$iso = $_POST['iso'];
+echo "$iso\t";
+
+
+$server = $_POST['server'];
+
+echo"$server";
+
+
+
+
+
 ?>
+
