@@ -20,7 +20,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 }
 //新增伺服器
-if($server =="nginx"){
+if($server =="nginx"){			//server判斷	
 	if($iso=="ubuntu"){		// ubuntu 判斷
 		$str = "RUN apt-get update -y \
 &&  apt-get install nginx -y
@@ -50,11 +50,39 @@ CMD [\"nginx\", \"-g\", \"daemon off;\"]";
 
 	}
 }else{
-$str = "123 apach";
+	 if($iso=="ubuntu"){             // ubuntu 判斷
+                $str = "RUN apt-get update -y \
+&&  apt-get -y install apache2
+
+
+EXPOSE 8080
+
+CMD [\"/usr/sbin/apachectl\",\"-D\",\"FOREGROUND\"]";
     $file = fopen("Dockerfile","a+"); //開啟檔案
     fwrite($file,$str.PHP_EOL);
     fclose($file);
+
+        }else{                          // centos 判斷
+             $str = "RUN yum upgrade -y \
+&&  yum install epel-release -y \
+&&  yum update -y \
+&&  yum install httpd httpd-tools -y
+
+
+EXPOSE 8080
+
+CMD [\"/usr/sbin/httpd\",\"-D\",\"FOREGROUND\"]";
+    $file = fopen("Dockerfile","a+"); //開啟檔案
+    fwrite($file,$str.PHP_EOL);
+    fclose($file);
+
+
+	}
 }
+
+
+
+
 
 //列出 Dockerfile內容
 $filename = "Dockerfile";
