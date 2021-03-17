@@ -12,8 +12,7 @@ ARG DEBIAN_FRONTEND=noninteractive
     fwrite($file,$str.PHP_EOL);
     fclose($file);
 }else{
-	$str = "FROM centos:7
-ARG DEBIAN_FRONTEND=noninteractive
+	$str = "FROM centos:8
 ";
     $file = fopen("Dockerfile","w+"); //開啟檔案
     fwrite($file,$str.PHP_EOL);
@@ -34,8 +33,9 @@ CMD [\"nginx\", \"-g\", \"daemon off;\"]";
     fwrite($file,$str.PHP_EOL);
     fclose($file);
 
-	}else{ 				// centos 判斷以死狀態
-	     $str = "RUN yum install epel-release -y \
+	}else{ 				// centos 判斷
+	     $str = "RUN yum upgrade -y \
+&&  yum install epel-release -y \
 &&  yum update -y \
 &&  yum install nginx -y
 

@@ -1,8 +1,9 @@
-FROM ubuntu:18.04
-ARG DEBIAN_FRONTEND=noninteractive
+FROM centos:8
 
-RUN apt-get update -y \
-&&  apt-get install nginx -y
+RUN yum upgrade -y \
+&&  yum install epel-release -y \
+&&  yum update -y \
+&&  yum install nginx -y
 
 
 EXPOSE 8080
