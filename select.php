@@ -1,5 +1,4 @@
 <?php
-
 $iso = $_POST['iso'];
 
 $server = $_POST['server'];
@@ -98,11 +97,28 @@ if(file_exists($filename)){
         fclose($file);
     }
 }
-echo $str;
+$output = shell_exec('RET=`docker build -t dockerfile .`;echo $RET');
+echo'<pre>';
+echo $output;
+echo $str; ##dockerfile 內容
+echo'</pre>';
 
-
-
-
-
+$output = shell_exec('RET=`docker run --rm -p8080:80 -d dockerfile`;echo $RET');
+echo $output;
 ?>
 
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <form action="index.html" method="GET">
+	<input type="submit" value="回首頁">
+
+    </form>
+  </body>
+</html>
