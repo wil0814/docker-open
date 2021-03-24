@@ -1,11 +1,10 @@
-FROM centos:8
+FROM ubuntu:18.04
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN yum upgrade -y \
-&&  yum install epel-release -y \
-&&  yum update -y \
-&&  yum install nginx -y
+RUN apt-get update -y \
+&&  apt-get -y install apache2
 
 
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/sbin/apachectl","-D","FOREGROUND"]

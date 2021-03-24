@@ -1,7 +1,9 @@
 <?php
-$iso = $_POST['iso'];
+header("Content-type:text/html;charset=utf-8");
 
-$server = $_POST['server'];
+$iso = $_POST["iso"];
+
+$server = $_POST["server"];
 //新增系統
 if($iso =="ubuntu"){
 	$str = "FROM ubuntu:18.04
@@ -84,41 +86,35 @@ CMD [\"/usr/sbin/httpd\",\"-D\",\"FOREGROUND\"]";
 
 
 //列出 Dockerfile內容
-$filename = "Dockerfile";
-$str = "";
+//$filename = "Dockerfile";
+//$str = "";
 //判斷是否有該檔案
-if(file_exists($filename)){
-    $file = fopen($filename, "r");
-    if($file != NULL){
+//if(file_exists($filename)){
+//    $file = fopen($filename, "r");
+//    if($file != NULL){
         //當檔案未執行到最後一筆，迴圈繼續執行(fgets一次抓一行)
-        while (!feof($file)) {
-		$str .= fgets($file);
-        }
-        fclose($file);
-    }
-}
+//        while (!feof($file)) {
+//		$str .= fgets($file);
+//        }
+//        fclose($file);
+//    }
+//}
 $output = shell_exec('RET=`docker build -t dockerfile .`;echo $RET');
-echo'<pre>';
-echo $output;
-echo $str; ##dockerfile 內容
-echo'</pre>';
+//echo'<pre>';
+//echo $output;
+//echo $str; ##dockerfile 內容
+//echo'</pre>';
+if($server == "nginx"){
+	$output = shell_exec('RET=`docker run --rm -p8081:80 -d dockerfile`;echo $RET');
 
-$output = shell_exec('RET=`docker run --rm -p8080:80 -d dockerfile`;echo $RET');
-echo $output;
+}else{
+	$output = shell_exec('RET=`docker run --rm -p8080:80 -d dockerfile`;echo $RET');
+
+}
+//$output = shell_exec('RET=`docker run --rm -p8080:80 -d dockerfile`;echo $RET');
+//echo $output;
 ?>
 
 
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My test page</title>
-  </head>
-  <body>
-    <form action="index.html" method="GET">
-	<input type="submit" value="回首頁">
 
-    </form>
-  </body>
-</html>
