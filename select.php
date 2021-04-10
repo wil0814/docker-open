@@ -5,6 +5,11 @@ $iso = $_POST["iso"];
 
 $server = $_POST["server"];
 //新增系統
+if($iso =="youbike"){
+$output = shell_exec('sudo docker run --rm -p8080:80 -p8081:80 -p3306:3306 -itd william880814123/0107-test');
+echo $output;
+}
+
 if($iso =="ubuntu"){
 	$str = "FROM ubuntu:18.04
 ARG DEBIAN_FRONTEND=noninteractive
@@ -12,7 +17,7 @@ ARG DEBIAN_FRONTEND=noninteractive
     $file = fopen("Dockerfile","w+"); //開啟檔案
     fwrite($file,$str.PHP_EOL);
     fclose($file);
-}else{
+}elseif($iso =="centos"){
 	$str = "FROM centos:8
 ";
     $file = fopen("Dockerfile","w+"); //開啟檔案
@@ -27,7 +32,7 @@ if($server =="nginx"){			//server判斷
 &&  apt-get install nginx -y
 
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD [\"nginx\", \"-g\", \"daemon off;\"]";
     $file = fopen("Dockerfile","a+"); //開啟檔案
@@ -41,7 +46,7 @@ CMD [\"nginx\", \"-g\", \"daemon off;\"]";
 &&  yum install nginx -y
 
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD [\"nginx\", \"-g\", \"daemon off;\"]";
     $file = fopen("Dockerfile","a+"); //開啟檔案
@@ -56,7 +61,7 @@ CMD [\"nginx\", \"-g\", \"daemon off;\"]";
 &&  apt-get -y install apache2
 
 
-EXPOSE 8080
+EXPOSE 8082
 
 CMD [\"/usr/sbin/apachectl\",\"-D\",\"FOREGROUND\"]";
     $file = fopen("Dockerfile","a+"); //開啟檔案
@@ -70,7 +75,7 @@ CMD [\"/usr/sbin/apachectl\",\"-D\",\"FOREGROUND\"]";
 &&  yum install httpd httpd-tools -y
 
 
-EXPOSE 8080
+EXPOSE 8082
 
 CMD [\"/usr/sbin/httpd\",\"-D\",\"FOREGROUND\"]";
     $file = fopen("Dockerfile","a+"); //開啟檔案
@@ -99,16 +104,19 @@ CMD [\"/usr/sbin/httpd\",\"-D\",\"FOREGROUND\"]";
 //        fclose($file);
 //    }
 //}
-$output = shell_exec('RET=`docker build -t dockerfile .`;echo $RET');
+
+
+$output = shell_exec('RET=`sudo docker build -t dockerfile .`;echo $RET');
+
 //echo'<pre>';
 //echo $output;
 //echo $str; ##dockerfile 內容
 //echo'</pre>';
 if($server == "nginx"){
-	$output = shell_exec('RET=`docker run --rm -p8081:80 -d dockerfile`;echo $RET');
+	$output = shell_exec('RET=`sudo docker run --rm -p8081:80 -d dockerfile`;echo $RET');
 
 }else{
-	$output = shell_exec('RET=`docker run --rm -p8080:80 -d dockerfile`;echo $RET');
+	$output = shell_exec('RET=`sudo docker run --rm -p8082:80 -d dockerfile`;echo $RET');
 
 }
 //$output = shell_exec('RET=`docker run --rm -p8080:80 -d dockerfile`;echo $RET');

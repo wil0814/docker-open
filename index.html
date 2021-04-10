@@ -7,6 +7,20 @@
 <meta charset="utf-8">
 <title>docker 選擇</title>
 <script>
+$(function(){
+	$("#iso").change(function() { 
+    
+	    var selectedCountry = $(this).val(); 
+    
+	    if(selectedCountry == "ubuntu" || selectedCountry == "centos") { 
+     
+    		 $("#server").show(); 
+    	    }else { 
+    		 $("#server").hide(); 
+             } 
+       }); 
+
+}); 
 
 $(function(){
   $("#but1").click(function(){
@@ -23,38 +37,26 @@ $(function(){
      {               
       alert("即將跳轉")
       //alert(data.server)
-      if($("#server").val() == "nginx"){
-            window.location.href='http://localhost:8081';
-      }else{
-            window.location.href='http://localhost:8080';
-
+      if($("#iso").val()=="youbike"){
+	      window.open("http://localhost:8080/test/taipei.php");
+	     // window.location.href='http://localhost:8080/test/taipei.php';      
+      }else{		     
+              if($("#server").val() == "nginx"){
+                   window.open("http://localhost:8081");                  
+              }else if($("#server").val() == "apach"){
+                   window.open("http://localhost:8082");
+               }
       }
-     } 
+
+     
+
+
+   }	     
 });     
         });
 }); 
 
-$(function(){
-  $("#but2").click(function(){
-        $.ajax({ 
-    url: "run.php", 
-    //type:'POST',
-    //data:{
-     //       "iso" : $("#iso").val(),
-     //       "server" : $("#server").val()
-    //},
-    //dataType:"JSON",
-    success: 
-     function(data) 
-     {               
-      alert("即將跳轉")
-      //alert(data.server)
-             
-      window.location.href='http://localhost:8080/test/taipei.php';
-     } 
-});     
-        });
-});
+
 
 
 </script>
@@ -80,6 +82,7 @@ $(function(){
 		<select id ="iso" class="btn dropdown-toggle dropdown-toggle-split btn-lg btn-outline-dark"  >
         	        <option  value="ubuntu" selected>ubuntu</option>
         	        <option  value="centos">centos</option>
+			<option  value="youbike">youbike</option>
        		 </select>
 		</td>
 
@@ -98,12 +101,7 @@ $(function(){
        
 	<!--	<input class="btn btn-outline-dark btn-lg "  type="submit" value="送出資料"> -->
 </div>
-<div style="margin:5% auto auto 45%">
 
-        <button id="but2">youbike</button>
-
-        <!--    <input class="btn btn-outline-dark btn-lg "  type="submit" value="送出資料"> -->
-</div>
 
 <!--</form>-->
 
